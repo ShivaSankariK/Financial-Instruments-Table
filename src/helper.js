@@ -28,17 +28,16 @@ const handleSorter = (data, value) => {
     });
     } else {
       newSet = data.sort((a, b) => {
-        let fa = a.assetClass === "Credit" ? "zcredit" : a.assetClass.toLowerCase() ,
-            fb = b.assetClass === "Credit" ? "zcredit" : b.assetClass.toLowerCase();
-            if (fa < fb) {
+        let fa = a.assetClass.toLowerCase() ,
+            fb = b.assetClass.toLowerCase();
+            if ((fa === "equities" && fb === "macro") || (fa === "equities" && fb === "credit") || (fa === "macro" && fb === "credit")) {
               return -1;
-          }
-          if (fa > fb) {
-              return 1;
-          }
-          return 0;
-        
-    });
+            }
+            if (fa === "credit" && fb === "macro") {
+                return 1;
+            } 
+            return 0;  
+        });
     }
     return newSet;
 };
